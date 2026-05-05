@@ -11,7 +11,7 @@ import javax.swing.border.Border;
 
 
 public class Pencere extends javax.swing.JFrame {
-    private final int Lb1_Initial_Time = 60;
+    private final int Lb1_Initial_Time = 70;
     private boolean isRandom = false;
     private boolean isNormalGame = false;
     // BUNU EKLE: Timer'ı sınıf seviyesine alıyoruz ki Geri butonu da görebilsin
