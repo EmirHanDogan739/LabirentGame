@@ -11,7 +11,7 @@ import javax.swing.border.Border;
 
 
 public class Pencere extends javax.swing.JFrame {
-    private final int Lb1_Initial_Time = 250;
+    private final int Lb1_Initial_Time = 80;
     private final int random_lb_time = 60;
     private boolean isRandom = false; //tuşlarımızın bir nevi etiketi
     private boolean isNormalGame = false;//+
