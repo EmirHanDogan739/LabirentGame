@@ -11,10 +11,10 @@ import javax.swing.border.Border;
 
 
 public class Pencere extends javax.swing.JFrame {
-    private final int Lb1_Initial_Time = 60;
-    private boolean isRandom = false;
-    private boolean isNormalGame = false;
-    // BUNU EKLE: Timer'ı sınıf seviyesine alıyoruz ki Geri butonu da görebilsin
+    private final int Lb1_Initial_Time = 250;
+    private final int random_lb_time = 60;
+    private boolean isRandom = false; //tuşlarımızın bir nevi etiketi
+    private boolean isNormalGame = false;//+
     private TimeManager timer;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Pencere.class.getName());
     
@@ -25,6 +25,7 @@ public class Pencere extends javax.swing.JFrame {
         
     }
     @SuppressWarnings("unchecked")
+    // arayüz kodalrımız
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -59,7 +60,7 @@ public class Pencere extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Başlat");
+        jButton1.setText("Normal Oyun");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -116,33 +117,31 @@ public class Pencere extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-// Timer başlatılırken süre bitince ne olacağı Runnable olarak veriliyor
-isNormalGame = true;
+    // Timer başlatılırken süre bitince ne olacağı Runnable olarak veriliyor
+    isNormalGame = true;                //etiketlerimizi kullandık
         if(!isRandom && isNormalGame){
-            // BAŞTAKİ 'TimeManager' KELİMESİNİ SİLDİK, DİREKT 'timer =' YAPTIK
             timer = new TimeManager(jLabel1, Lb1_Initial_Time, () -> {
-                jPanel1.removeAll(); 
-                jPanel1.revalidate();
-                jPanel1.repaint();
+                jPanel1.removeAll(); //panelimizi temizliyor
+                jPanel1.revalidate(); // panelin düzenini günceller 
+                jPanel1.repaint(); // tekrar boyuyor
                 
                 jButton1.setText("Tekrar Başlayınız");
                 jButton1.setVisible(true);
-                jButton2.setVisible(true); // Random butonunu da geri getir
-                jButton3.setVisible(false); // Süre bitince Geri butonunu gizle
+                jButton2.setVisible(false); 
+                jButton3.setVisible(true);
             });
             // Oyun başlarken sayacı 1 yap
             seviyeCounter.setText("1");
             timer.start();
-            
             jPanel1.removeAll();
             // Runnable ekleyerek LabirentPanel'i çağırıyoruz
         LabirentPanel lb = new LabirentPanel(() -> {
             // LabirentPanel'den bölüm geçildi haberi gelince sayacı artır
-            int guncelSeviye = Integer.parseInt(seviyeCounter.getText());
-            seviyeCounter.setText(String.valueOf(guncelSeviye + 1));
+            int guncelSeviye = Integer.parseInt(seviyeCounter.getText()); //Integer.parseInt String değeri int değere çevirir
+            seviyeCounter.setText(String.valueOf(guncelSeviye + 1));  //String.valueOf Stringin sayı almasını sağlıyor
         });
             
-            jPanel1.add(lb,BorderLayout.CENTER);
+            jPanel1.add(lb,BorderLayout.CENTER); //ekrana labirenti ekliyor
             jPanel1.revalidate();
             jPanel1.repaint();
             
@@ -155,56 +154,21 @@ isNormalGame = true;
         } else {
             jButton3.setVisible(false);
         }
-    
-        
-        /*
-        // İlk labirenti üret
-        LabirentGEN Seviye = new LabirentGEN(31, 31);
-        Seviye.uret(1, 1);
-        
-        // UsedLabirentPanel'i sınıf seviyesinde (global) veya final bir dizi içinde tutmaya
-        // gerek kalmadan direkt oluşturup Runnable olayını tanımlıyoruz:
-        UsedLabirentPanel oyunPaneli = new UsedLabirentPanel(Seviye.getLabirent(), new Runnable() {
-            @Override
-            public void run() {
-                // BU KOD KIRMIZI NOKTAYA DEĞİNCE ÇALIŞIR
-                System.out.println("Tebrikler! Yeni harita oluşturuluyor...");
-                // Yeni bir DFS labirenti üret
-                LabirentGEN yeniSeviye = new LabirentGEN(31, 31);
-                yeniSeviye.uret(1, 1);
-                timer.setTimer(60);
-                // Paneli silmeden sadece içindeki diziyi değiştir (Performans artışı)
-                UsedLabirentPanel p = (UsedLabirentPanel) jPanel1.getComponent(0);
-                p.setLabirent(yeniSeviye.getLabirent());
-                
-                // Not: Eğer istersen burada TimeManager süresine +10 saniye falan da ekleyebilirsin!
-            }
-        });
-        
-        // Paneli ekrana ekle
-        jPanel1.add(oyunPaneli, java.awt.BorderLayout.CENTER);
-        jPanel1.revalidate();
-        jPanel1.repaint();
-        
-        // ÖNEMLİ: Eklenen panelin klavye tuşlarını dinleyebilmesi için odağı ona ver
-        oyunPaneli.requestFocusInWindow();
-        */
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 isRandom = true;
         if(isRandom && !isNormalGame){
-            // YİNE BAŞTAKİ 'TimeManager' KELİMESİNİ SİLDİK
-            timer = new TimeManager(jLabel1, Lb1_Initial_Time, () -> {
+            timer = new TimeManager(jLabel1, random_lb_time, () -> {
                 jPanel1.removeAll(); 
                 jPanel1.revalidate();
                 jPanel1.repaint();
                 
                 jButton2.setText("Tekrar Başlayınız");
-                jButton1.setVisible(true); // Başlat butonunu da geri getir
+                jButton1.setVisible(false);
                 jButton2.setVisible(true);
-                jButton3.setVisible(false); // Süre bitince Geri butonunu gizle
+                jButton3.setVisible(true);
             });
             
             timer.start();
@@ -225,7 +189,7 @@ isRandom = true;
                 LabirentGEN yeniSeviye = new LabirentGEN(31, 31);
                 yeniSeviye.uret(1,1);
                 timer.setTimer(60);
-                UsedLabirentPanel p = (UsedLabirentPanel ) jPanel1.getComponent(0);
+                UsedLabirentPanel p = (UsedLabirentPanel ) jPanel1.getComponent(0); // panel içindeki tuşları indkse göre sıralıyor 
                 p.setLabirent(yeniSeviye.getLabirent());
             }
         });
@@ -234,7 +198,7 @@ isRandom = true;
             jPanel1.revalidate();
             jPanel1.repaint();
             
-            oyunPaneli.requestFocusInWindow();
+            oyunPaneli.requestFocusInWindow(); // haraket tuşlarımızı algılamak için lazım
             jButton2.setVisible(false);
             jButton1.setVisible(false);
         }
@@ -248,33 +212,36 @@ isRandom = true;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-  // 1. Süreyi durdur ve etiketi sıfırla
+       //Süreyi durdur ve etiketi sıfırlar
         if (timer != null) {
             timer.stop();
         }
         jLabel1.setText("Süre"); 
-        // Menüye dönünce sayacı tekrar 1'e sabitle
+        //Menüye dönünce sayacı tekrar 1'e sabitler
         seviyeCounter.setText("1");
-        // 2. Oyun panelini (labirenti) temizle
+        //Oyun panelini (labirenti) temizler
         jPanel1.removeAll();
         jPanel1.revalidate();
         jPanel1.repaint();
 
-        // 3. Durumları sıfırla
+        //Etiketleri sıfırlar
         isNormalGame = false;
         isRandom = false;
         
-        // 4. Ana menü butonlarını geri getir ve metinlerini düzelt
-        jButton1.setText("Başlat");
+        //Ana menü butonlarını geri getirir ve metinlerini düzeltir
+        jButton1.setText("Normal Oyun");
         jButton1.setVisible(true);
         
         jButton2.setText("Random Üret");
         jButton2.setVisible(true);
         
-        // 5. Geri butonunu artık gizle
+        //Geri butonunu artık gizle
         jButton3.setVisible(false);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    public void otomatikGeriBas() {
+        jButton3.doClick(); // Bu kod fare ile geri tuşuna basmışız gibi olur
+    }
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new Pencere().setVisible(true));
         

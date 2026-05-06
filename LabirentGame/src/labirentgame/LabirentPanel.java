@@ -1,5 +1,5 @@
 package labirentgame;
-//@author EmirhanDogan
+//@author Emirhan Doğan, Tahacan Demirbaş, Efe Deniz Ömür 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class LabirentPanel extends JPanel{
     
-    // 1 = Duvar 0 = Yol
+ // 1 = Duvar 0 = Yol
 int[][] Kolay_Lab = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 {1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1},
@@ -37,8 +37,6 @@ int[][] Kolay_Lab = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-//Orta seviye olacak ve çözüm yolu açılacak
-
 int Orta_Lab1[][] = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 {1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1},
@@ -62,6 +60,7 @@ int Orta_Lab1[][] = {
 {1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+
 int[][] Orta_Lab2 = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 {1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
@@ -84,11 +83,10 @@ int[][] Orta_Lab2 = {
 {1,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,0,1,1,1,1,0,1},
 {1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-
-
 };
-int[][] labirent35x40 = {
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+
+int[][] Zor_Lab = {
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
         {1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
         {1,0,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,1},
         {1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1},
@@ -121,56 +119,36 @@ int[][] labirent35x40 = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-    int[][] Zor_Lab1 = {
-        {1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,1,0,0,0,1},
-        {1,0,1,0,1,0,1,0,1},
-        {1,0,1,0,0,0,1,0,1},
-        {1,0,1,1,1,1,1,0,1},
-        {1,0,0,0,0,0,0,0,1},
-        {1,1,1,1,1,1,1,1,1}
-    };
-    int[][] Zor_Lab2 = {
-        {1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,1,0,0,0,0,1},
-        {1,0,1,0,1,0,1,1,0,1},
-        {1,0,1,0,0,0,0,1,0,1},
-        {1,0,1,1,1,1,0,1,0,1},
-        {1,0,0,0,0,0,0,1,0,1},
-        {1,1,1,1,1,1,1,1,1,1}
-    };
     
     //Aktif olan Labirent
-    int[][] labirent = labirent35x40;
+    int[][] labirent = Kolay_Lab;
     
     int seviye = 1;
     
-    //Oyuncu Konum
+    //Oyuncu Konumu
     int PlayerX = 1,PlayerY = 1;
     
-    // 1. Dışarıdan gelecek haberciyi tanımla
+    // Runnable = seviye atlanınca başka bir dosyadan metot çalıştırıyor
     private Runnable onLevelUp;
     
     public LabirentPanel(Runnable onLevelUp){
-        this.onLevelUp = onLevelUp; // Habercimizi kaydettik
-        setFocusable(true);
-        requestFocusInWindow();
-        addKeyListener(new KeyAdapter(){
+        this.onLevelUp = onLevelUp;
+        setFocusable(true); // tuşları panelde algılamak için
+        requestFocusInWindow(); // aynı işlem
+        addKeyListener(new KeyAdapter(){ //tuş algılama metodu
         @Override
         public void keyPressed(KeyEvent event){
-            int key = event.getKeyCode();
+            int key = event.getKeyCode(); // tuşlarımız ve ne yapacakalrı
             if((key == KeyEvent.VK_UP || key == KeyEvent.VK_W) && labirent[PlayerY - 1][PlayerX] == 0) PlayerY--;
             if((key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) && labirent[PlayerY + 1][PlayerX] == 0) PlayerY++;
             if((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) && labirent[PlayerY][PlayerX - 1] == 0) PlayerX--;
             if((key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) && labirent[PlayerY][PlayerX + 1] == 0) PlayerX++;
             
-             int bitisX = labirent[0].length - 2;
-             int bitisY = labirent.length - 2;
-            //Çıkışa ulaşılmış ise sonraki seviyeye geç
-            if(PlayerX == bitisX && PlayerY == bitisY){
+            //Çıkışa ulaşılmış ise sonraki seviyeye geçmek için
+            if(PlayerX == labirent[0].length - 2 && PlayerY == labirent.length - 2){
                 SonrakiSeviye();
             }
-            repaint();
+            repaint(); // panelde yeni labirenti olşturuyor
         }
         
         });
@@ -178,12 +156,10 @@ int[][] labirent35x40 = {
        
     }
     
-    
+    // switch case ile seviyelerimizi sıralıyoruz
     private void SonrakiSeviye(){
         seviye++;
         PlayerX = 1;PlayerY = 1;
-        
-        // 3. Bölüm geçildiğinde Pencere.java'daki kodu tetikle
         if(onLevelUp != null) {
             onLevelUp.run();
         }
@@ -199,15 +175,18 @@ int[][] labirent35x40 = {
                 labirent = Orta_Lab2;
                 break;
             case 4:
-                labirent = Zor_Lab1;
-                break;
-            case 5:
-                labirent = Zor_Lab2;
+                labirent = Zor_Lab;
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Tebrikler! Tüm labirentleri bitirdiniz!");
-                seviye = 1;
-                labirent = Kolay_Lab;
+                // Tebrikler mesajı 
+                JOptionPane.showMessageDialog(null, "Tebrikler! Tüm labirentleri bitirdiniz.");
+                
+                // Ok'a tıkladığımız zaman otomatik başa atmaya sağlıyor 
+                Pencere anaEkran = (Pencere) javax.swing.SwingUtilities.getWindowAncestor(this);
+                if (anaEkran != null) {
+                    anaEkran.otomatikGeriBas();
+                }
+                break;
         }
     }
     
@@ -215,15 +194,15 @@ int[][] labirent35x40 = {
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         
-        
-        int tileSize = 25;
+        //labirenti boyama kodlarımız
+        int tileSize = 25; 
         for(int row = 0;row < labirent.length;row++){
             for(int col = 0;col < labirent[row].length;col++){
                 if(labirent[row][col] == 1){
                     g.setColor(Color.BLACK);
                     g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                     
-                }else if(labirent[row][col] == 2){
+                }else if(labirent[row][col] == 2){ // yarım kalmış bir hikaye
                     g.setColor(Color.YELLOW);
                     g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
@@ -234,7 +213,7 @@ int[][] labirent35x40 = {
             }
         }
         
-        //Oyuncu
+        //Oyuncu 
         g.setColor(Color.GREEN);
         g.fillOval(PlayerX * tileSize, PlayerY * tileSize, tileSize, tileSize);
         

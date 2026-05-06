@@ -10,6 +10,8 @@ import java.util.Random;
 public class LabirentGEN {
     private int width,height;
     private int[][] labirent;
+    
+    //Rastgele yön seçimi
     private Random r = new Random();
     
     public LabirentGEN(int width,int height){
@@ -21,29 +23,35 @@ public class LabirentGEN {
             Arrays.fill(labirent[i], 1);
         }
     }
+    //Rastgele üretilen labirentin hangi noktadan oyulmaya başlayacağı ile ilgilenir
     public void uret(int StartX,int StartY){
         carve(StartX,StartY);
     }
+    //Öz yineleme metodu, labirenti depth first search(dfs) algoritması ile oyar ve çıkış yolu bulur
     private void carve(int x,int y){
-        int[] girdi = {0,1,2,3};
+        // 0 -> sağ , 1 -> sol, 2 -> aşağı,3 -> yukarı
+        int[] girdi = {0,1,2,3}; 
+        //Yönleri karıştırıyoruz labirent her seferinde farklı olsun diye
         karistir(girdi);
         for(int g : girdi){
             int dx = 0,dy = 0;
             switch(g){
-                case 0: dx = 1;break;
-                case 1: dx = -1;break;
-                case 2: dy = 1;break;
-                case 3: dy = -1;break;
+                case 0: dx = 1;break; //sağ
+                case 1: dx = -1;break;//sol
+                case 2: dy = 1;break;//aşağı
+                case 3: dy = -1;break;//yukarı
             }
-            int nx = x + dx*2;
+            //Yeni koordinatlar 2 adım ötesinde olmalı
+            int nx = x + dx*2; 
             int ny = y + dy * 2;
             if(nx > 0 && ny > 0 && nx < width - 1 && ny < height - 1 && labirent[ny][nx] == 1){
-                labirent[y + dy][x + dx] = 0;
-                labirent[ny][nx] = 0;
-                carve(nx,ny);
+                labirent[y + dy][x + dx] = 0; // duvarı yol yap
+                labirent[ny][nx] = 0; //hedefi yol yap
+                carve(nx,ny); // 2 adım öteden devam et recursive(öz yineleme)
             }
         }
     }
+    //Dizideki sayıları karıştırmak için
     private void karistir(int[] arr){
         for(int i = arr.length -1;i > 0;i--){
             int j = r.nextInt(i + 1);
