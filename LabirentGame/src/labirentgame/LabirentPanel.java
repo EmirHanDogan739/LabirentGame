@@ -202,9 +202,9 @@ int[][] labirent35x40 = {
     }
     
     @Override
-    protected void paintComponent(Graphics graf){
-        super.paintComponent(graf);
-        Graphics2D g = (Graphics2D) graf;
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        
         
         int tileSize = 30;
         for(int row = 0;row < labirent.length;row++){
