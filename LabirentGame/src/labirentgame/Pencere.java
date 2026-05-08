@@ -11,8 +11,8 @@ import javax.swing.border.Border;
 
 
 public class Pencere extends javax.swing.JFrame {
-    private final int Lb1_Initial_Time = 80;
-    private final int random_lb_time = 60;
+    private final int Lb1_Initial_Time = 8;
+    private final int random_lb_time = 6;
     private boolean isRandom = false; //tuşlarımızın bir nevi etiketi
     private boolean isNormalGame = false;//+
     private TimeManager timer;
@@ -242,11 +242,7 @@ isRandom = true;
     public void otomatikGeriBas() {
         jButton3.doClick(); // Bu kod fare ile geri tuşuna basmışız gibi olur
     }
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new Pencere().setVisible(true));
-        
-        
-    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
