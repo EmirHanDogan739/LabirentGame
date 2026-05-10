@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 public class UsedLabirentPanel extends JPanel {
     private int[][] labirent;
     private int size = 25;
+    private int viewDistance = 6;
     private int PlayerX = 1, PlayerY = 1;
     private Runnable onWin; // Oyuncu kazandığında tetiklenecek olay
 
@@ -59,18 +60,33 @@ public class UsedLabirentPanel extends JPanel {
         
         for(int y = 0; y < labirent.length; y++){
             for(int x = 0; x < labirent[0].length; x++){
-                if(labirent[y][x] == 1){
+                
+                double dx = x - PlayerX;
+                double dy = y - PlayerY;
+                double Distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if(Distance >= viewDistance){
+                    g.setColor(new Color(20,20,20));
+                }else{
+                    if(labirent[y][x] == 1){
                     g.setColor(Color.BLACK);
                 } else {
                     g.setColor(Color.WHITE);
                 }
+                    
+                }
                 g.fillRect(x * size, y * size, size, size);
+                
+                
             }
         }
-        g.setColor(Color.GREEN);
-        g.fillOval(PlayerX * size, PlayerY * size, size, size);
+            //Player
+            g.setColor(Color.GREEN);
+            g.fillOval(PlayerX * size, PlayerY * size, size, size);
         
-        g.setColor(Color.RED);
-        g.fillRect((labirent[0].length - 2) * size, (labirent.length - 2) * size, size, size);
+        if(Math.hypot((labirent[0].length - 2) - PlayerX, (labirent.length - 2) - PlayerY) < viewDistance){
+            g.setColor(Color.RED);
+            g.fillRect((labirent[0].length - 2) * size, (labirent.length - 2) * size, size, size);
+        }
     }
 }
