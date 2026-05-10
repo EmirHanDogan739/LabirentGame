@@ -1,4 +1,4 @@
-# 🌀 Labyrinth Game
+# Labyrinth Game
 
 A simple **Labyrinth Game** developed in Java. The player must navigate through the maze and reach the exit.
 
