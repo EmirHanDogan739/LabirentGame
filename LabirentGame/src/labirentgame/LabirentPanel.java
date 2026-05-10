@@ -127,7 +127,7 @@ int[][] Zor_Lab = {
     
     //Oyuncu Konumu
     int PlayerX = 1,PlayerY = 1;
-    
+    private int viewDistance = 4;
     // Runnable = seviye atlanınca başka bir dosyadan metot çalıştırıyor
     private Runnable onLevelUp;
     
@@ -198,7 +198,12 @@ int[][] Zor_Lab = {
         int tileSize = 25; 
         for(int row = 0;row < labirent.length;row++){
             for(int col = 0;col < labirent[row].length;col++){
-                if(labirent[row][col] == 1){
+                double Distance = Math.sqrt(Math.pow(col - PlayerX, 2) + Math.pow(row - PlayerY, 2));
+                if(Distance > viewDistance){
+                    g.setColor(Color.BLACK);
+                    g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+                }else{
+                    if(labirent[row][col] == 1){
                     g.setColor(Color.BLACK);
                     g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                     
@@ -210,6 +215,8 @@ int[][] Zor_Lab = {
                     g.setColor(Color.WHITE);
                     g.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
+              }
+
             }
         }
         
@@ -217,9 +224,13 @@ int[][] Zor_Lab = {
         g.setColor(Color.GREEN);
         g.fillOval(PlayerX * tileSize, PlayerY * tileSize, tileSize, tileSize);
         
-        //Çıkış Noktası
-        g.setColor(Color.RED);
-        g.fillRect((labirent[0].length - 2) * tileSize, (labirent.length - 2) * tileSize, tileSize, tileSize);
+        double endView = Math.sqrt(Math.pow((labirent[0].length - 2) - PlayerX, 2) + Math.pow((labirent.length - 2) - PlayerY, 2));
+        if(endView <= viewDistance){
+            //Çıkış Noktası
+            g.setColor(Color.RED);
+            g.fillRect((labirent[0].length - 2) * tileSize, (labirent.length - 2) * tileSize, tileSize, tileSize);
+        }
+        
     }
 
     
